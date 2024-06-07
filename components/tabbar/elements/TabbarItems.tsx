@@ -8,7 +8,6 @@ import CircleButton from "./CircleButton";
 
 const TabbarItems = () => {
   const { width, height } = useApplicationDimensions();
-  console.log(width, height);
   const trapezoidWidth = width * 0.68;
   const trapezoidHeight = height * 0.12;
   const circleRadius = (trapezoidHeight * 0.51) / 2;
