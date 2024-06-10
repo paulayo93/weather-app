@@ -5,6 +5,8 @@ import ListIcon from "../icons/ListIcon";
 import TrapezoidBackground from "./TrapezoidBackground";
 import useApplicationDimensions from "../../../hooks/useApplicationDimensions";
 import CircleButton from "./CircleButton";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 const TabbarItems = () => {
   const { width, height } = useApplicationDimensions();
@@ -12,6 +14,8 @@ const TabbarItems = () => {
   const trapezoidHeight = height * 0.12;
   const circleRadius = (trapezoidHeight * 0.51) / 2;
   const buttonCenterX = width / 2 - circleRadius;
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
   return (
     <View
       style={{
@@ -29,8 +33,8 @@ const TabbarItems = () => {
           ...StyleSheet.absoluteFillObject,
           left: buttonCenterX,
           top: 12,
-          width: circleRadius*2,
-          height:circleRadius*2
+          width: circleRadius * 2,
+          height: circleRadius * 2,
         }}
       >
         {({ pressed }) => (
@@ -38,7 +42,9 @@ const TabbarItems = () => {
         )}
       </Pressable>
 
-      <ListIcon />
+      <Pressable onPress={() => navigation.navigate("list")}>
+        <ListIcon />
+      </Pressable>
     </View>
   );
 };
