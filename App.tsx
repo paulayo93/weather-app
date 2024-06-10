@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Home from "./screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import RootNavigator from "./navigators/RootNavigator";
+import { WeatherDataProvider } from "./context/WeatherDataContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,12 +29,14 @@ export default function App() {
   if (!fontsLoaded) return null;
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <RootNavigator />
-          <StatusBar style="light" />
-        </NavigationContainer>
-      </GestureHandlerRootView>
+      <WeatherDataProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <RootNavigator />
+            <StatusBar style="light" />
+          </NavigationContainer>
+        </GestureHandlerRootView>
+      </WeatherDataProvider>
     </SafeAreaProvider>
   );
 }

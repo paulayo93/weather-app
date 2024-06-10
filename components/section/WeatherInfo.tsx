@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { Weather } from "../../models/Weather";
 import { DEGREE_SYMBOL } from "../../utils/Constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -10,13 +10,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { useForecastSheetPosition } from "../../context/ForecastSheetContext";
 import { Extrapolate } from "@shopify/react-native-skia";
+import { useWeatherData } from "../../context/WeatherDataContext";
 
-interface WeatherInfoProps {
-  weather: Weather;
-}
-
-const WeatherInfo = ({ weather }: WeatherInfoProps) => {
-  const { city, temperature, condition, high, low } = weather;
+const WeatherInfo = () => {
+  const { weatherData, setWeatherData } = useWeatherData();
+  const {
+    currentWeather: { city, temperature, condition, high, low },
+  } = weatherData;
   const { top } = useSafeAreaInsets();
   const topMargin = 51;
   const weatherInfoMargin = top + topMargin;
@@ -66,18 +66,27 @@ const WeatherInfo = ({ weather }: WeatherInfoProps) => {
     };
   });
 
-const animatedTempConditionStyles = useAnimatedStyle(() => {
-    const flexDirection = animatedPosition.value > 0.5 ? 'row' : 'column';
+  const animatedTempConditionStyles = useAnimatedStyle(() => {
+    const flexDirection = animatedPosition.value > 0.5 ? "row" : "column";
     return {
-        flexDirection
-    }
-})
+      flexDirection,
+    };
+  });
 
-const animatedConditionTxtStyle = useAnimatedStyle(() => {
+  const animatedConditionTxtStyle = useAnimatedStyle(() => {
     return {
-        transform: [{translateY:interpolate(animatedPosition.value, [0,0.5,1], [0, -20, 0], Extrapolate.CLAMP) }]
-    }
-})
+      transform: [
+        {
+          translateY: interpolate(
+            animatedPosition.value,
+            [0, 0.5, 1],
+            [0, -20, 0],
+            Extrapolate.CLAMP
+          ),
+        },
+      ],
+    };
+  });
 
   return (
     <Animated.View
@@ -87,7 +96,9 @@ const animatedConditionTxtStyle = useAnimatedStyle(() => {
       ]}
     >
       <Animated.Text style={styles.cityText}>{city}</Animated.Text>
-      <Animated.View style={[ {alignItems: 'center'}, animatedTempConditionStyles]}>
+      <Animated.View
+        style={[{ alignItems: "center" }, animatedTempConditionStyles]}
+      >
         <Animated.View style={[{ flexDirection: "row" }]}>
           <Animated.Text
             style={[styles.temperatureText, animatedTempTextStyles]}
@@ -102,7 +113,11 @@ const animatedConditionTxtStyle = useAnimatedStyle(() => {
           </Animated.Text>
         </Animated.View>
 
-        <Animated.Text style={[styles.conditionText, animatedConditionTxtStyle]}>{condition}</Animated.Text>
+        <Animated.Text
+          style={[styles.conditionText, animatedConditionTxtStyle]}
+        >
+          {condition}
+        </Animated.Text>
       </Animated.View>
       <Animated.Text style={[styles.minMaxText, animatedMinMaxTextStyles]}>
         H: {high} {DEGREE_SYMBOL} L: {low} {DEGREE_SYMBOL}

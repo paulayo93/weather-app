@@ -7,14 +7,13 @@ import WeatherTabBar from "../components/tabbar/WeatherTabBar";
 import { currentWeather } from "../data/currentWeather";
 import { ForecastSheetProvider } from "../context/ForecastSheetContext";
 const Home = () => {
-
   return (
     <ForecastSheetProvider>
       <HomeBackground />
-      <WeatherInfo weather={currentWeather} />
+      <WeatherInfo />
       <ForecastSheet />
       <WeatherTabBar />
-    </ForecastSheetProvider> 
+    </ForecastSheetProvider>
   );
 };
 

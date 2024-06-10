@@ -25,9 +25,11 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useForecastSheetPosition } from "../../context/ForecastSheetContext";
+import { useWeatherData } from "../../context/WeatherDataContext";
 
 const ForecastSheet = () => {
   const { width, height } = useApplicationDimensions();
+  const {weatherData: {hourlyForecast, weeklyForecast}} = useWeatherData();
   const smallWidgetSize = width / 2 - 20;
   const snapPoints = ["38.5%", "83%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
@@ -110,7 +112,7 @@ const ForecastSheet = () => {
               capsuleWidth={capsuleWidth}
               capsuleHeight={capsuleHeight}
               capsuleRadius={capsuleRadius}
-              forecasts={hourly}
+              forecasts={hourlyForecast}
             />
           </Animated.View>
           <Animated.View style={[animatedWeeklyStyles]}>
@@ -118,7 +120,7 @@ const ForecastSheet = () => {
               capsuleWidth={capsuleWidth}
               capsuleHeight={capsuleHeight}
               capsuleRadius={capsuleRadius}
-              forecasts={weekly}
+              forecasts={weeklyForecast}
             />
           </Animated.View>
         </View>
