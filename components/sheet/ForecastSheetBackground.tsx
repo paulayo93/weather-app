@@ -10,7 +10,7 @@ interface ForecastSheetBackgroundProps {
     cornerRadius: number;
 }
 
-const ForecastSheetBackground = ({width, height, cornerRadius}: ForcastSheetBackgroundProps) => { 
+const ForecastSheetBackground = ({width, height, cornerRadius}: ForecastSheetBackgroundProps) => { 
     const borderPath = `M 0 ${cornerRadius}
                         A ${cornerRadius} ${cornerRadius} 0 0 1 ${cornerRadius} 0
                         H ${width-cornerRadius}

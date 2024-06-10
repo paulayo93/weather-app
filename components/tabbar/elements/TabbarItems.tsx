@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Platform } from "react-native";
 import React from "react";
 import MapIcon from "../icons/MapIcon";
 import ListIcon from "../icons/ListIcon";
@@ -27,7 +27,10 @@ const TabbarItems = () => {
         paddingHorizontal: 32,
       }}
     >
-      <Pressable onPress={() => eventEmitter.emit("locationEvent")}>
+      <Pressable
+        style={{ paddingBottom: Platform.OS === "android" ? 50 : 0 }}
+        onPress={() => eventEmitter.emit("locationEvent")}
+      >
         <MapIcon />
       </Pressable>
       <TrapezoidBackground width={trapezoidWidth} height={trapezoidHeight} />
@@ -45,7 +48,7 @@ const TabbarItems = () => {
         )}
       </Pressable>
 
-      <Pressable onPress={() => navigation.navigate("list")}>
+      <Pressable style={{ paddingBottom: Platform.OS === "android" ? 50 : 0 }} onPress={() => navigation.navigate("list")}>
         <ListIcon />
       </Pressable>
     </View>
